@@ -46,7 +46,7 @@ export LIBSBSDIG=/home/brash/local/libsbsdig
 # $ANALYZER not needed while using modulefiles (See above)
 export ANALYZER=/home/brash/local/analyzer
 export SBSOFFLINE=/work/hallc/gep/brash/SBS-offline
-export SBS_REPLAY=/works/hallc/gep/brash/SBS-replay
+export SBS_REPLAY=/work/hallc/gep/brash/SBS-replay
 
 # Path to data directories (NOT User Specific)
 # The path is written this way below becauses strings will need
