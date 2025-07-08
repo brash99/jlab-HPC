@@ -44,9 +44,9 @@ export LIBSBSDIG=/home/brash/local/libsbsdig
 
 # Required by the scripts running replay (data or MC) jobs
 # $ANALYZER not needed while using modulefiles (See above)
-export ANALYZER=/home/brash/local/analyzer
-export SBSOFFLINE=/work/hallc/gep/brash/SBS-offline
-export SBS_REPLAY=/work/hallc/gep/brash/SBS-replay
+export ANALYZER=/work/hallc/gep/brash/Podd/1.7.0
+export SBSOFFLINE=/work/hallc/gep/brash/CDet_replay/git-repo/sbs_devel/install
+export SBS_REPLAY=/work/hallc/gep/brash/CDet_replay/git-repo/sbs_devel/SBS-replay
 
 # Path to data directories (NOT User Specific)
 # The path is written this way below becauses strings will need
