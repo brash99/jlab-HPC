@@ -31,7 +31,7 @@ JLABENV='2.6'   # /site/12gev_phys/softenv.sh version
 # ********************************************** # 
 
 # Required by all
-export SCRIPT_DIR=/work/hallc/gep/brash/jlab-HPC
+export SCRIPT_DIR=/work/hallc/gep/brash/CDet_replay/git-repo/sbs_devel/jlab-HPC
 
 # Required by the scripts running G4SBS or LIBSBSDIG jobs
 export G4SBS=/home/brash/g4sbs_install
