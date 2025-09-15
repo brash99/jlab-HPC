@@ -26,7 +26,7 @@
 ANAVER='1.7.12-sbs6'  # Analyzer version
 # 2) Using /site/12gev_phys/softenv.sh (NOT recommended!) 
 # ** $ANALYZER will be needed for this
-useJLABENV=1    # =1, forces 12gev_phys environment
+useJLABENV=0    # =1, forces 12gev_phys environment
 JLABENV='2.6'   # /site/12gev_phys/softenv.sh version
 # ********************************************** # 
 
