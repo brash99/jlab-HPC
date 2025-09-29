@@ -22,7 +22,7 @@ run_on_ifarm=$4 # 1=>Yes (If true, runs all jobs on ifarm)
 # Workflow name (Not relevant if run_on_ifarm = 1)
 workflowname=
 # Specify a directory on volatile to store replayed ROOT files
-outdirpath=
+outdirpath= #/volatile/halla/sbs/btspaude/cdet/
 
 # Checking the environments
 if [[ ! -d $SCRIPT_DIR ]]; then
@@ -105,7 +105,7 @@ for ((i=0; i<=$maxsegments; i++))
 do
     #fnameout_pattern='/farm_out/pdbforce/pdatta_gmn_'$runnum'_segment'$i'.out'
     #sbatch --output=$fnameout_pattern run_GMN_sbatch_nohodo.sh $runnum -1 0 e1209019 $i 1
-    jobname=${USER}'_cdet_'$runnum'_segment'$i
+    jobname=${USER}'_cdet_full'$runnum'_segment'$i
     
     # look for first segment on cache disk:
     firstsegname='gep5_'$runnum'.evio.0.0'

@@ -79,7 +79,7 @@ cp $SBS/run_replay_here/.rootrc $SWIF_JOB_WORK_DIR
 
 analyzer -b -q 'replay_CDet.C+('$runnum','\"$prefix\"','$maxevents','$firstevent','$firstsegment','$maxsegments')'
 
-outfilename=$OUT_DIR'/cdet_'$runnum'_'$maxevents'.root'
+outfilename=$OUT_DIR'/cdet_'$runnum'_*.root'
 echo "Looking for output file: $outfilename"
 #logfilename=$LOG_DIR'/replay_gmn_'$runnum'*.log'
 ##### below log dir commented out since cdet replay doesn't output .log files #####

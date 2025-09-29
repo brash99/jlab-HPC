@@ -22,7 +22,7 @@ run_on_ifarm=$4 # 1=>Yes (If true, runs all jobs on ifarm)
 # Workflow name (Not relevant if run_on_ifarm = 1)
 workflowname=
 # Specify a directory on volatile to store replayed ROOT files
-outdirpath=
+outdirpath= #/volatile/halla/sbs/btspaude/cdet/
 
 # Checking the environments
 if [[ ! -d $SCRIPT_DIR ]]; then
