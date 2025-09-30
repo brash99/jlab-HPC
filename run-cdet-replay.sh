@@ -77,16 +77,17 @@ if [[ -f .rootrc ]]; then
 fi
 cp $SBS/run_replay_here/.rootrc $SWIF_JOB_WORK_DIR
 
-analyzer -b -q 'replay_CDet.C+('$runnum','\"$prefix\"','$maxevents','$firstevent','$firstsegment','$maxsegments')'
+analyzer -b -q 'replay_CDet.C+('$runnum','$maxevents','$firstevent','\"$prefix\"','$firstsegment','$maxsegments')'
 
-outfilename=$OUT_DIR'/cdet_'$runnum'_*.root'
+outfilename=${OUT_DIR}/cdet_${runnum}_*.root
+
 echo "Looking for output file: $outfilename"
 #logfilename=$LOG_DIR'/replay_gmn_'$runnum'*.log'
 ##### below log dir commented out since cdet replay doesn't output .log files #####
 #logfilename=$LOG_DIR'/e1209019_*'$runnum'*.log' 
 
 # move output files
-mv $outfilename $outdirpath/rootfiles
+cp $outfilename $outdirpath/rootfiles
 #mv $logfilename $outdirpath/logs
 
 # clean up the work directory
