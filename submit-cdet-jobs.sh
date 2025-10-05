@@ -17,8 +17,9 @@ export DATA_DIR=/cache/mss/halla/sbs/GEp/raw
 # List of arguments
 runnum=$1       # run number 
 nevents=$2      # total no. of events to replay
-maxsegments=$3  # maximum no. of segments (or jobs) to analyze
-run_on_ifarm=$4 # 1=>Yes (If true, runs all jobs on ifarm)
+minsegments=$3  # first segment (min possible value is 0)
+maxsegments=$4  # maximum no. of segments (or jobs) to analyze
+run_on_ifarm=$5 # 1=>Yes (If true, runs all jobs on ifarm)
 # Workflow name (Not relevant if run_on_ifarm = 1)
 workflowname=
 # Specify a directory on volatile to store replayed ROOT files
@@ -36,9 +37,9 @@ elif [[ ! -d $SBS_REPLAY ]]; then
 fi
 
 # Validating the number of arguments provided
-if [[ "$#" -ne 4 ]]; then
+if [[ "$#" -ne 5 ]]; then
     echo -e "\n--!--\n Illegal number of arguments!!"
-    echo -e " This script expects 4 arguments: <runnum> <nevents> <maxsegments> <run_on_ifarm>\n"
+    echo -e " This script expects 5 arguments: <runnum> <nevents> <minsegment> <maxsegments> <run_on_ifarm>\n"
     exit;
 else 
     echo -e '\n------'
@@ -101,7 +102,7 @@ else
     echo -e "\nRunning all jobs on ifarm!\n"
 fi
 
-for ((i=0; i<=$maxsegments; i++))
+for ((i=$minsegments; i<=$maxsegments; i++))
 do
     #fnameout_pattern='/farm_out/pdbforce/pdatta_gmn_'$runnum'_segment'$i'.out'
     #sbatch --output=$fnameout_pattern run_GMN_sbatch_nohodo.sh $runnum -1 0 e1209019 $i 1

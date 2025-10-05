@@ -77,6 +77,9 @@ if [[ -f .rootrc ]]; then
 fi
 cp $SBS/run_replay_here/.rootrc $SWIF_JOB_WORK_DIR
 
+# --- Clean up stale ROOT ACLiC temp files before replay ---
+rm -f *_ACLiC_dict.* *_ACLiC_dict.cxx_tmp_* *.so *.pcm *.d
+
 analyzer -b -q 'replay_CDet.C+('$runnum','$maxevents','$firstevent','\"$prefix\"','$firstsegment','$maxsegments')'
 
 outfilename=${OUT_DIR}/cdet_${runnum}_*.root
