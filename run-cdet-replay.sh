@@ -20,16 +20,15 @@ firstevent=$3
 prefix=$4
 firstsegment=$5
 maxsegments=$6
-use_sbs_gems=$7
-datadir=$8
-outdirpath=$9
-run_on_ifarm=${10}
-analyzerenv=${11}
-sbsofflineenv=${12}
-sbsreplayenv=${13}
-ANAVER=${14}        # Analyzer version
-useJLABENV=${15}    # Use 12gev_env instead of modulefiles?
-JLABENV=${16}       # /site/12gev_phys/softenv.sh version
+datadir=$7
+outdirpath=$8
+run_on_ifarm=${9}
+analyzerenv=${10}
+sbsofflineenv=${11}
+sbsreplayenv=${12}
+ANAVER=${13}     # Analyzer version
+useJLABENV=${14} # Use 12gev_env instead of modulefiles?
+JLABENV=${15}    # /site/12gev_phys/softenv.sh version
 
 # paths to necessary libraries (ONLY User specific part) ---- #
 export ANALYZER=$analyzerenv
@@ -50,6 +49,7 @@ if [[ $(type -t module) != function && -r ${MODULES} ]]; then
     source ${MODULES} 
 fi 
 # Choosing software environment
+### Should be able to comment out, since also set in setenv.sh script ####
 if [[ (! -d /group/halla/modulefiles) || ($useJLABENV -eq 1) ]]; then 
     source /site/12gev_phys/softenv.sh $JLABENV
     source $ANALYZER/bin/setup.sh
@@ -67,7 +67,6 @@ export DB_DIR=$SBS_REPLAY/DB
 export OUT_DIR=$SWIF_JOB_WORK_DIR
 export LOG_DIR=$SWIF_JOB_WORK_DIR
 
-echo 'DB_DIR='$DB_DIR
 echo 'OUT_DIR='$OUT_DIR
 echo 'LOG_DIR='$LOG_DIR
 
@@ -78,27 +77,21 @@ if [[ -f .rootrc ]]; then
 fi
 cp $SBS/run_replay_here/.rootrc $SWIF_JOB_WORK_DIR
 
-if [ $prefix = 'e1209019' ] #GMN replay
-then
-    analyzer -b -q 'replay_gmn.C+('$runnum','$maxevents','$firstevent','\"$prefix\"','$firstsegment','$maxsegments')'
-fi
+# --- Clean up stale ROOT ACLiC temp files before replay ---
+rm -f *_ACLiC_dict.* *_ACLiC_dict.cxx_tmp_* *.so *.pcm *.d
 
-if [ $prefix = 'e1209016' ] #GEN replay
-then
-    analyzer -b -q 'replay_gen.C+('$runnum','$maxevents','$firstevent','\"$prefix\"','$firstsegment','$maxsegments',2,0,0,'$use_sbs_gems')'
-fi
+analyzer -b -q 'replay_CDet.C+('$runnum','$maxevents','$firstevent','\"$prefix\"','$firstsegment','$maxsegments')'
 
-if [ $prefix = 'gep5' ] #GEP replay #Hard-coded for 3-stream.
-then
-    analyzer -b -q 'replay_gep.C+('$runnum','$maxevents','$firstevent','\"$prefix\"','$firstsegment','$maxsegments',2,0,0,0,'$use_sbs_gems')'
-fi
+outfilename=${OUT_DIR}/cdet_${runnum}_*.root
 
-outfilename=$OUT_DIR'/'$prefix'_*'$runnum'*.root'
-logfilename=$LOG_DIR'/'$prefix'_*'$runnum'*.log' 
+echo "Looking for output file: $outfilename"
+#logfilename=$LOG_DIR'/replay_gmn_'$runnum'*.log'
+##### below log dir commented out since cdet replay doesn't output .log files #####
+#logfilename=$LOG_DIR'/e1209019_*'$runnum'*.log' 
 
 # move output files
-mv $outfilename $outdirpath/rootfiles
-mv $logfilename $outdirpath/logs
+cp $outfilename $outdirpath/rootfiles
+#mv $logfilename $outdirpath/logs
 
 # clean up the work directory
 rm .rootrc
