@@ -117,7 +117,9 @@ do
     mssfilename='mss:/mss/halla/sbs/GEp/raw/'$eviofilename
     cachefile='/cache/halla/sbs/GEp/raw/'$eviofilename
     
-    script=$SCRIPT_DIR'/run-cdet-replay.sh'
+    # A parallel launcher may select a compatible replay runner. The default
+    # remains the historical CDet-only path.
+    script=${CDET_RUN_SCRIPT:-$SCRIPT_DIR'/run-cdet-replay.sh'}
 
     testfilename='/mss/halla/sbs/GEp/raw/'$eviofilename
 

@@ -70,9 +70,25 @@ export LOG_DIR=$SWIF_JOB_WORK_DIR
 echo 'OUT_DIR='$OUT_DIR
 echo 'LOG_DIR='$LOG_DIR
 
-# handling any existing .rootrc file in the work directory
-# mainly necessary while running the jobs on ifarm
-REPLAY_MACRO="${SBS_REPLAY}/replay/replay_CDet.C"
+# Select the replay entry point. The default remains the historical CDet-only
+# replay. run-cdet-gem-replay.sh sets CDET_ENABLE_GEMS=1 to select the full
+# GEp replay, including gemFT, gemFPP, FTROI, and GEM tracking.
+CDET_ENABLE_GEMS=${CDET_ENABLE_GEMS:-0}
+
+if [[ ${CDET_ENABLE_GEMS} -eq 1 ]]; then
+    REPLAY_MACRO="${SBS_REPLAY}/replay/replay_gep.C"
+    REPLAY_FUNCTION="replay_gep"
+    DOGEMS=1
+    OUTPUT_GLOB="${OUT_DIR}/gep5_replayed_${runnum}_*.root"
+else
+    REPLAY_MACRO="${SBS_REPLAY}/replay/replay_CDet.C"
+    REPLAY_FUNCTION="replay_CDet"
+    # Preserve replay_CDet's historical default argument exactly. The current
+    # macro does not act on this parameter, but callers should not observe an
+    # argument-level behavior change if that implementation later evolves.
+    DOGEMS=1
+    OUTPUT_GLOB="${OUT_DIR}/cdet_${runnum}_*.root"
+fi
 
 if [[ ! -f "${REPLAY_MACRO}" ]]; then
     echo "ERROR: Replay macro not found:"
@@ -128,7 +144,7 @@ cp "${SBS}/run_replay_here/.rootrc" \
 # Build a small ROOT driver macro
 #
 # Important:
-#   SetBuildDir() is called before loading replay_CDet.C+.
+#   SetBuildDir() is called before loading the selected replay macro.
 #   Therefore all ACLiC-generated files go into this job's private directory,
 #   not into the shared SBS_REPLAY/replay directory.
 # ------------------------------------------------------------------------- #
@@ -148,13 +164,20 @@ cat > "${ROOT_DRIVER}" <<EOF
         gSystem->Exit(1);
     }
 
-    replay_CDet(
+    ${REPLAY_FUNCTION}(
         ${runnum},
         ${maxevents},
         ${firstevent},
         "${prefix}",
         ${firstsegment},
-        ${maxsegments}
+        ${maxsegments},
+        2,
+        0,
+        0,
+        0,
+        ${DOGEMS},
+        0,
+        0
     );
 }
 EOF
@@ -179,9 +202,7 @@ mkdir -p "${outdirpath}/rootfiles"
 
 shopt -s nullglob
 
-output_files=(
-    "${OUT_DIR}"/cdet_"${runnum}"_*.root
-)
+output_files=( ${OUTPUT_GLOB} )
 
 if (( ${#output_files[@]} == 0 )); then
     echo "ERROR: No replay output files were produced for run ${runnum}."
