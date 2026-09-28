@@ -31,22 +31,26 @@ JLABENV='2.6'   # /site/12gev_phys/softenv.sh version
 # ********************************************** # 
 
 # Required by all
-export SCRIPT_DIR=/work/hallc/gep/brash/CDet_replay/git-repo/sbs_devel/jlab-HPC
+export SCRIPT_DIR=/work/halla/sbs/brash/CDet_replay/git-repo/sbs_devel/jlab-HPC
 
 # Required by the scripts running G4SBS or LIBSBSDIG jobs
-export G4SBS=/work/hallc/gep/brash/g4sbs_install
+export G4SBS=/work/halla/sbs/brash/g4sbs_install
 
 # Required by the scripts running SIMC (simc_gfortran) jobs
-export SIMC=/work/hallc/gep/brash/simc_gfortran
+export SIMC=/work/halla/sbs/brash/simc_gfortran
 
 # Required by the scripts running digitization jobs using sbsdig
-export LIBSBSDIG=/work/hallc/gep/brash/libsbsdig_install
+export LIBSBSDIG=/work/halla/sbs/brash/libsbsdig_install
 
 # Required by the scripts running replay (data or MC) jobs
 # $ANALYZER not needed while using modulefiles (See above)
-export ANALYZER=/work/hallc/gep/brash/Podd/1.7.12/
-export SBSOFFLINE=/work/hallc/gep/brash/CDet_replay/git-repo/sbs_devel/install #SBS-offline install directory
-export SBS_REPLAY=/work/hallc/gep/brash/CDet_replay/git-repo/sbs_devel/SBS-replay
+export ANALYZER=/work/halla/sbs/brash/Podd/1.7.0/
+export SBSOFFLINE=/work/halla/sbs/brash/CDet_replay/git-repo/sbs_devel/install #SBS-offline install directory
+export SBS_REPLAY=/work/halla/sbs/brash/CDet_replay/git-repo/sbs_devel/SBS-replay
+
+# Keep large replay products off the shared software filesystem.
+export CDET_OUTPUT_BASE=/volatile/halla/sbs/brash/CDet_replay
+export OUT_DIR=${CDET_OUTPUT_BASE}/sbs/Rootfiles/FTROI_step5
 
 # Path to data directories (NOT User Specific)
 # The path is written this way below becauses strings will need

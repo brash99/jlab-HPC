@@ -11,7 +11,7 @@
 
 #SBATCH --partition=production
 #SBATCH --account=halla
-#SBATCH --mem-per-cpu=1500
+#SBATCH --mem-per-cpu=4000
 
 # List of arguments
 runnum=$1

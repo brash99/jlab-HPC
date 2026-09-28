@@ -137,10 +137,10 @@ do
 	    echo 'Adding new swif2 job, runnum='$runnum', segment='$i     
 	    if [ $i -gt 0 ]; then
 		echo 'segment '$i' also requires first segment'
-		swif2 add-job -workflow $workflowname -partition production -name $jobname -cores 1 -disk 25GB -ram 1500MB -input $cachefile $mssfilename -input $cachefirst $mssfirst $script $runnum $nevents 0 gep5 $i 1 $DATA_DIR $outdirpath $run_on_ifarm $ANALYZER $SBSOFFLINE $SBS_REPLAY $ANAVER $useJLABENV $JLABENV
+		swif2 add-job -workflow $workflowname -partition production -name $jobname -cores 1 -disk 25GB -ram 4GB -input $cachefile $mssfilename -input $cachefirst $mssfirst $script $runnum $nevents 0 gep5 $i 1 $DATA_DIR $outdirpath $run_on_ifarm $ANALYZER $SBSOFFLINE $SBS_REPLAY $ANAVER $useJLABENV $JLABENV
 	    else
 		echo 'segment '$i' IS first segment'
-		swif2 add-job -workflow $workflowname -partition production -name $jobname -cores 1 -disk 25GB -ram 1500MB -input $cachefile $mssfilename $script $runnum $nevents 0 gep5 $i 1 $DATA_DIR $outdirpath $run_on_ifarm $ANALYZER $SBSOFFLINE $SBS_REPLAY $ANAVER $useJLABENV $JLABENV
+		swif2 add-job -workflow $workflowname -partition production -name $jobname -cores 1 -disk 25GB -ram 4GB -input $cachefile $mssfilename $script $runnum $nevents 0 gep5 $i 1 $DATA_DIR $outdirpath $run_on_ifarm $ANALYZER $SBSOFFLINE $SBS_REPLAY $ANAVER $useJLABENV $JLABENV
 	    fi
 	    
 	else
