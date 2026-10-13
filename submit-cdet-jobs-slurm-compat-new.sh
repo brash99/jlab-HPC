@@ -199,14 +199,14 @@ exec "${SCRIPT_DIR%/}/replay_gmn.sh" "$RUNNUM" "$NEVENTS" 0 "gep5" "$SEG" 1 \
 TASK
 chmod +x "$WRAPPER"
 
-# Submit
+# Submit. JLab's sbatch default routes scheduler-managed stdout/stderr to the
+# required /farm_out filesystem; do not override it with OUTDIR/logs.
 echo "Submitting SLURM array: $ARRAY_RANGE"
 SUBMIT_OUT=$(sbatch \
   --job-name=cdet-replay \
   --array="$ARRAY_RANGE" \
   --partition="${PARTITION:-compute}" \
   --time="${TIME:-02:00:00}" \
-  --output="${LOGDIR%/}/slurm-%A_%a.out" \
   --export=ALL,RUNLIST="$RUNLIST",NEVENTS="$NEVENTS",NSEGMENTS="$NSEGMENTS",OUTDIR="$OUTDIR",DATA_DIR="$DATA_DIR",SCRIPT_DIR="$SCRIPT_DIR",ANALYZER="$ANALYZER",SBSOFFLINE="$SBSOFFLINE",SBS_REPLAY="$SBS_REPLAY",ANAVER="$ANAVER",useJLABENV="$useJLABENV",JLABENV="$JLABENV" \
   "$WRAPPER")
 echo "$SUBMIT_OUT"

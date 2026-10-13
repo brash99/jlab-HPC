@@ -153,8 +153,11 @@ SBATCH_CMD=(sbatch
   --array="$ARRAY_RANGE"
   --partition="$PARTITION"
   --time="$TIME"
-  --output="$LOGDIR/slurm-%A_%a.out"
 )
+
+# JLab requires scheduler-managed stdout/stderr to use /farm_out.  Leave the
+# paths unspecified so sbatch applies the site default instead of rejecting a
+# user-selected LOGDIR under /work or /volatile.
 
 [[ -n "$ACCOUNT"    ]] && SBATCH_CMD+=(--account="$ACCOUNT")
 [[ -n "$CONSTRAINT" ]] && SBATCH_CMD+=(--constraint="$CONSTRAINT")
