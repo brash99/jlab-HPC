@@ -10,7 +10,7 @@ fi
 
 RUNFILE="$1"
 WORKFLOW_TAG="$2"
-OUTDIR="/volatile/halla/sbs/btspaude/cdet"
+OUTDIR="/volatile/halla/sbs/brash/cdet"
 
 if [ ! -f "$RUNFILE" ]; then
   echo "Error: file '$RUNFILE' not found"
@@ -40,7 +40,7 @@ while IFS= read -r run || [ -n "$run" ]; do
   ./submit-cdet-jobs.sh "${run}" -1 0 100 0 <<EOF
 n
 ${workflow}
-/volatile/halla/sbs/btspaude/cdet
+/volatile/halla/sbs/brash/cdet
 EOF
 
   echo "Finished run ${run}"
