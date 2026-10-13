@@ -57,4 +57,4 @@ export OUT_DIR=${CDET_OUTPUT_BASE}/sbs/Rootfiles/FTROI_step5
 # to be added to the left side of them, ie /cache/$GMN_DATA_PATH
 export GMN_DATA_PATH=halla/sbs/raw
 export GEN_DATA_PATH=halla/sbs/GEnII/raw
-export GEP_DARA_PATH=halla/sbs/GEp/raw
+export GEP_DATA_PATH=halla/sbs/GEp/raw
